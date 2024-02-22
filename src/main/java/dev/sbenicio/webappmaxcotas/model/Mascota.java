@@ -29,7 +29,7 @@ public class Mascota {
     private Veterinario veterinario;
 
     @ManyToMany
-    @JoinTable(name = "Mascota_Vacuna",
+    @JoinTable(name = "mascota_vacuna",
         joinColumns = @JoinColumn(name = "mascota_id"),
         inverseJoinColumns = @JoinColumn(name = "vacuna_id"))
     private List<Vacuna> vacunasAplicadas = new ArrayList<>();
