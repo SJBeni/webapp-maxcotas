@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.catalina.LifecycleState;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data   //toString, equals, hashcode, getters y setters
@@ -19,5 +22,8 @@ public class Vacuna {
     private Long id;
     private String nombre;
     private LocalDate fechaVencimiento;
+
+    @ManyToMany(mappedBy = "vacunasAplicadas",fetch = FetchType.EAGER)
+    private List<Mascota> mascotas = new ArrayList<>();
 
 }

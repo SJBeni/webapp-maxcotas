@@ -22,7 +22,7 @@ public class Veterinario {
     private String email;
 
     @OneToMany(mappedBy = "veterinario")
-    private List<Mascota> mascotaAtendida;
+    private List<Mascota> mascotasAtendida;
 
 
 
