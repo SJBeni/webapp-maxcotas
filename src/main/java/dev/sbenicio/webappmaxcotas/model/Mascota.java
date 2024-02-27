@@ -2,6 +2,7 @@ package dev.sbenicio.webappmaxcotas.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Data   //toString, equals, hashcode, getters y setters
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Mascota {
 
     @Id

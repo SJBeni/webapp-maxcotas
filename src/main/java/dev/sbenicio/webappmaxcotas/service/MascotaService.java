@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -38,5 +39,37 @@ public class MascotaService {
         return mascotaRepository.save(mascota);
     }
 
+
+    public void actualizarMascota(Long idMascota, Mascota mascotaActualizada, Long idVeterinario, List<Long> idVacunas){
+        Optional<Mascota> mascotaOptional = mascotaRepository.findById(idMascota);
+
+        Veterinario veterinario = veterinarioRepository.findById(idVeterinario).orElseThrow(() -> new RuntimeException("No se encontro el " +
+                "veterinario (" + idVeterinario + ") al momento de guardar la mascota"));
+
+        if (idVacunas != null){
+            mascotaActualizada.setVacunasAplicadas(vacunaRepository.findAllById(idVacunas));
+        }
+
+        mascotaActualizada.setVeterinario(veterinario);
+
+        Mascota mascotaExistente = construirMascota(mascotaActualizada, mascotaOptional);
+        mascotaRepository.save(mascotaExistente);
+    }
+
+    private Mascota construirMascota(Mascota mascotaActualizada, Optional<Mascota> mascotaOptional){
+        Mascota.MascotaBuilder mascotaBuilder = Mascota.builder();
+
+        mascotaOptional.ifPresent(mascotaExistente -> {
+            mascotaBuilder
+                    .id(mascotaExistente.getId())
+                    .nombre(mascotaActualizada.getNombre())
+                    .especie(mascotaActualizada.getEspecie())
+                    .sexo(mascotaActualizada.getSexo())
+                    .fechaNacimiento(mascotaActualizada.getFechaNacimiento())
+                    .veterinario(mascotaActualizada.getVeterinario())
+                    .vacunasAplicadas(mascotaActualizada.getVacunasAplicadas());
+        });
+        return mascotaBuilder.build();
+    }
 
 }
