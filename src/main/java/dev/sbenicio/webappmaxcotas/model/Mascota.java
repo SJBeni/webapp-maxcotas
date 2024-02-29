@@ -1,6 +1,8 @@
 package dev.sbenicio.webappmaxcotas.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,13 +23,22 @@ public class Mascota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
+    @NotBlank(message = "El nombre NO puede estar en blanco")
     private String nombre;
+
+    @NotBlank(message = "La especie NO puede estar en blanco")
     private String especie;
+
+    @NotBlank(message = "El sexo NO puede estar en blanco")
     private String sexo;
+
+    @NotNull(message = "La Fecha de Nacimiento NO puede estar en blanco")
     private LocalDate fechaNacimiento;
 
     @ManyToOne
     @JoinColumn(name = "veterinario_id")
+    @NotNull(message = "El Veterinario NO puede estar en blanco")
     private Veterinario veterinario;
 
     @ManyToMany
