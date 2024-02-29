@@ -33,6 +33,8 @@ public class Veterinario {
     @OneToMany(mappedBy = "veterinario", fetch = FetchType.EAGER)
     private List<Mascota> mascotasAtendida;
 
+    @OneToOne(mappedBy = "veterinario", cascade = CascadeType.ALL)
+    private Usuario usuario;
 
 
 }
